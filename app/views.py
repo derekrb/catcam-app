@@ -1,17 +1,21 @@
 from flask import render_template
-import requests
 
 from app import app
+import forms
+import pi
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+
+    form = forms.TestVideo()
+    if form.validate_on_submit():
+        pi.get('/video', video='test')
+
+    return render_template('index.html', form=form)
 
 
 @app.route('/pi')
-def pi():
-    r = requests.get(app.config['PI_HOST'] + '/ping',
-                     auth=(app.config['PI_USER'], app.config['PI_PASSWORD']))
-    print r.status_code
+def ping():
+    r = pi.get('/ping')
     return r.text, r.status_code
