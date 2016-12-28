@@ -1,4 +1,6 @@
 
+dev_config.py
+
 *.pyc
 
 # Elastic Beanstalk Files
