@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_basicauth import BasicAuth
 
 app = Flask(__name__)
 
@@ -9,5 +10,7 @@ try:
 except IOError:
     # Production config - values in envvars
     app.config.from_pyfile('config.py')
+
+basic_auth = BasicAuth(app)
 
 from app import views

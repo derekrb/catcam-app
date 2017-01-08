@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, Response, stream_with_context
 
 from app import app
 import forms
@@ -19,3 +19,10 @@ def index():
 def ping():
     r = pi.get('/ping')
     return r.text, r.status_code
+
+
+@app.route('/stream')
+def stream():
+    r = pi.get('/stream', stream=True)
+    return Response(stream_with_context(r.iter_content()),
+                    content_type=r.headers['content-type'])
