@@ -24,5 +24,5 @@ def ping():
 @app.route('/stream')
 def stream():
     r = pi.get('/stream', stream=True)
-    return Response(stream_with_context(r.iter_content()),
+    return Response(stream_with_context(r.iter_content(1024)),
                     content_type=r.headers['content-type'])
